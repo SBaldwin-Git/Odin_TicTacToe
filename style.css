@@ -1,0 +1,15 @@
+
+
+/* FOOTER */
+
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    margin-top: 1%;
+}
+
+footer p{
+    margin-right: 5px;
+}

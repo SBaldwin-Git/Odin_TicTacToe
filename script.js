@@ -1,36 +1,62 @@
 const gameBoard = (() => {
-  const add = (a, b) => a + b;
-  const sub = (a, b) => a - b;
-  const mul = (a, b) => a * b;
-  const div = (a, b) => a / b;
+
+  let boardArray = [
+    '', 'X', '',
+    '', '', '',
+    '', '', '',
+  ];
+
   return {
-    add,
-    sub,
-    mul,
-    div,
+    boardArray
   };
 })();
 
 const displayController = (() => {
-  const add = (a, b) => a + b;
-  const sub = (a, b) => a - b;
-  const mul = (a, b) => a * b;
-  const div = (a, b) => a / b;
+
+  let playerTurn = true;
+  let gridItems = document.querySelectorAll('.grid-item');
+  let playerOneNameButton = document.querySelector('changePlayerOneBtn');
+  let playerTwoNameButton = document.querySelector('changePlayerTwoBtn');
+
+  const draw = () => {
+    gridItems.forEach((element, index) => {
+      element.textContent = gameBoard.boardArray[index];
+      element.addEventListener('click', () => {
+        if(element.textContent == '' && playerTurn == true){
+          element.textContent = playerOne.marker;
+          playerTurn = false;
+        } else if(element.textContent == '' && playerTurn == false){
+          element.textContent = playerTwo.marker;
+          playerTurn = true;
+        } else{
+          return;
+        }
+        
+      })
+    });
+  }
+
   return {
-    add,
-    sub,
-    mul,
-    div,
+    draw
   };
+
 })();
 
-const playerFactory = (name, age) => {
-  const sayHello = () => console.log('hello!');
+const playerFactory = (name, marker) => {
+
+  const setName = (newName) => {
+    name = newName;
+  }
   return {
     name,
-    age,
-    sayHello
+    marker,
+    setName
   };
 };
 
-const jeff = personFactory('jeff', 27)
+
+//Create default players
+const playerOne = playerFactory('Player 1', 'O');
+const playerTwo = playerFactory('Player 2', 'X');
+//Initialise the board
+displayController.draw();

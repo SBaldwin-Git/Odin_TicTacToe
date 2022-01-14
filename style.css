@@ -84,6 +84,15 @@ header h1 {
     background-color:rgb(247, 196, 93);
 }
 
+.playerOneColour{
+    background-color: palegreen;
+    pointer-events: none;
+}
+
+.playerTwoColour{
+    background-color: tomato;
+    pointer-events: none;
+}
 
 /* FOOTER */
 

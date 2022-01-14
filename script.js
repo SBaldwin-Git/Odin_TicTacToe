@@ -1,17 +1,21 @@
 const GameBoard = (() => {
 
   let boardArray = [
-    '', '', '',
-    '', '', '',
-    '', '', '',
+    '','','',
+    '','','',
+    '','',''
   ];
 
+  const getBoardArray = () => {
+    return boardArray;
+  }
   const setBoardArray = (index, newValue) => {
     boardArray[index] = newValue;
   };
 
   return {
     boardArray,
+    getBoardArray,
     setBoardArray
   };
 })();
@@ -26,14 +30,16 @@ const DisplayController = (() => {
       element.textContent = GameBoard.boardArray[index];
       element.addEventListener('click', () => {
         if (element.textContent == '' && playerTurn == true) {
-          element.textContent = playerOne.marker;
+          element.textContent = playerOne.getMarker();
           element.classList.add('playerOneColour');
-          GameBoard.setBoardArray(index, playerOne.marker);
+          GameBoard.setBoardArray(index, playerOne.getMarker());
+          gameChecker(playerOne.getMarker());
           playerTurn = false;
         } else if (element.textContent == '' && playerTurn == false) {
-          element.textContent = playerTwo.marker;
+          element.textContent = playerTwo.getMarker();
           element.classList.add('playerTwoColour');
-          GameBoard.setBoardArray(index, playerTwo.marker);
+          GameBoard.setBoardArray(index, playerTwo.getMarker());
+          gameChecker(playerTwo.getMarker);
           playerTurn = true;
         } else {
           return;
@@ -41,6 +47,30 @@ const DisplayController = (() => {
 
       })
     });
+  }
+
+  const getCurrentPlayer = () => {
+    if (playerTurn == true) {
+      return playerOne.getName();
+    } else {
+      return playerTwo.getName();
+    }
+  }
+
+  const gameChecker = (marker) => {
+
+    //Check Rows
+    if (GameBoard.getBoardArray()[0] == GameBoard.getBoardArray()[1] && GameBoard.getBoardArray()[0] == GameBoard.getBoardArray()[2] && GameBoard.getBoardArray()[0] == marker) {
+      alert('Winner is ' + getCurrentPlayer() + '!')
+    } else if (GameBoard.getBoardArray()[3] == GameBoard.getBoardArray()[4] && GameBoard.getBoardArray()[0] == GameBoard.getBoardArray()[5] && GameBoard.getBoardArray()[3] == marker) {
+      alert('Winner is ' + getCurrentPlayer() + '!')
+    } else if (GameBoard.getBoardArray()[6] == GameBoard.getBoardArray()[7] && GameBoard.getBoardArray()[6] == GameBoard.getBoardArray()[8] && GameBoard.getBoardArray()[6] == marker) {
+      alert('Winner is ' + getCurrentPlayer() + '!')
+    }
+    //Check Columns
+
+    //Check diagonal
+    
   }
 
   //Name Buttons
@@ -72,10 +102,18 @@ const playerFactory = (name, marker) => {
   const setName = (newName) => {
     name = newName;
   }
+  const getName = () => {
+    return name;
+  }
+  const getMarker = () =>{
+    return marker;
+  }
   return {
     name,
     marker,
-    setName
+    setName,
+    getName,
+    getMarker
   };
 };
 

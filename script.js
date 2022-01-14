@@ -1,13 +1,18 @@
 const gameBoard = (() => {
 
   let boardArray = [
-    '', 'X', '',
+    '', '', '',
     '', '', '',
     '', '', '',
   ];
 
+  const setBoardArray = (index, newValue) => {
+    boardArray[index] = newValue;
+  };
+
   return {
-    boardArray
+    boardArray,
+    setBoardArray
   };
 })();
 
@@ -20,16 +25,18 @@ const displayController = (() => {
     gridItems.forEach((element, index) => {
       element.textContent = gameBoard.boardArray[index];
       element.addEventListener('click', () => {
-        if(element.textContent == '' && playerTurn == true){
+        if (element.textContent == '' && playerTurn == true) {
           element.textContent = playerOne.marker;
+          gameBoard.setBoardArray(index, playerOne.marker);
           playerTurn = false;
-        } else if(element.textContent == '' && playerTurn == false){
+        } else if (element.textContent == '' && playerTurn == false) {
           element.textContent = playerTwo.marker;
+          gameBoard.setBoardArray(index, playerTwo.marker);
           playerTurn = true;
-        } else{
+        } else {
           return;
         }
-        
+
       })
     });
   }
@@ -38,16 +45,16 @@ const displayController = (() => {
   const playerOneNameButton = document.querySelector('#changePlayerOneBtn');
   const playerTwoNameButton = document.querySelector('#changePlayerTwoBtn');
 
-  playerOneNameButton.addEventListener('click', () =>{
+  playerOneNameButton.addEventListener('click', () => {
     console.log('big test')
-      let newName = prompt('Please enter new name:');
-      document.querySelector('#playerOneHeader').textContent = newName;
+    let newName = prompt('Please enter new name:');
+    document.querySelector('#playerOneHeader').textContent = newName;
   });
 
-  playerTwoNameButton.addEventListener('click', () =>{
+  playerTwoNameButton.addEventListener('click', () => {
     console.log('big test')
-      let newName = prompt('Please enter new name:');
-      document.querySelector('#playerTwoHeader').textContent = newName;
+    let newName = prompt('Please enter new name:');
+    document.querySelector('#playerTwoHeader').textContent = newName;
   });
 
   return {

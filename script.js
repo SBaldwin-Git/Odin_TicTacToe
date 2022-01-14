@@ -15,8 +15,6 @@ const displayController = (() => {
 
   let playerTurn = true;
   let gridItems = document.querySelectorAll('.grid-item');
-  let playerOneNameButton = document.querySelector('changePlayerOneBtn');
-  let playerTwoNameButton = document.querySelector('changePlayerTwoBtn');
 
   const draw = () => {
     gridItems.forEach((element, index) => {
@@ -35,6 +33,22 @@ const displayController = (() => {
       })
     });
   }
+
+  //Name Buttons
+  const playerOneNameButton = document.querySelector('#changePlayerOneBtn');
+  const playerTwoNameButton = document.querySelector('#changePlayerTwoBtn');
+
+  playerOneNameButton.addEventListener('click', () =>{
+    console.log('big test')
+      let newName = prompt('Please enter new name:');
+      document.querySelector('#playerOneHeader').textContent = newName;
+  });
+
+  playerTwoNameButton.addEventListener('click', () =>{
+    console.log('big test')
+      let newName = prompt('Please enter new name:');
+      document.querySelector('#playerTwoHeader').textContent = newName;
+  });
 
   return {
     draw

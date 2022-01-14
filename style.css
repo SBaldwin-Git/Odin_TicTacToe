@@ -28,6 +28,27 @@ header h1 {
     padding: 15px;
 }
 
+header button{
+    position: absolute;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    background-color: paleturquoise;
+    width: 80px;
+    height: 80px;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 50px;
+}
+
+header button:hover{
+    background-color: rgb(188, 233, 233);
+}
+
+header button:active{
+    background-color: rgb(129, 235, 235);
+}
+
 #container {
     display: flex;
     justify-content: space-evenly;
@@ -91,6 +112,10 @@ header h1 {
 
 .playerTwoColour{
     background-color: tomato;
+    pointer-events: none;
+}
+
+.gameOver{
     pointer-events: none;
 }
 

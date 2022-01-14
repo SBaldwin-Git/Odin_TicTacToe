@@ -1,9 +1,9 @@
 const GameBoard = (() => {
 
   let boardArray = [
-    '','','',
-    '','','',
-    '','',''
+    '', '', '',
+    '', '', '',
+    '', '', ''
   ];
 
   const getBoardArray = () => {
@@ -24,22 +24,23 @@ const DisplayController = (() => {
 
   let playerTurn = true;
   let gridItems = document.querySelectorAll('.grid-item');
+  const restartButton = document.querySelector('#restartBtn');
 
   const draw = () => {
     gridItems.forEach((element, index) => {
       element.textContent = GameBoard.boardArray[index];
       element.addEventListener('click', () => {
         if (element.textContent == '' && playerTurn == true) {
-          element.textContent = playerOne.getMarker();
+          element.textContent = playerOne.marker;
           element.classList.add('playerOneColour');
-          GameBoard.setBoardArray(index, playerOne.getMarker());
-          gameChecker(playerOne.getMarker());
+          GameBoard.setBoardArray(index, playerOne.marker);
+          gameChecker(playerOne.marker);
           playerTurn = false;
         } else if (element.textContent == '' && playerTurn == false) {
-          element.textContent = playerTwo.getMarker();
+          element.textContent = playerTwo.marker;
           element.classList.add('playerTwoColour');
-          GameBoard.setBoardArray(index, playerTwo.getMarker());
-          gameChecker(playerTwo.getMarker);
+          GameBoard.setBoardArray(index, playerTwo.marker);
+          gameChecker(playerTwo.marker);
           playerTurn = true;
         } else {
           return;
@@ -57,20 +58,41 @@ const DisplayController = (() => {
     }
   }
 
+  const declareWinner = () => {
+    alert('Winner is ' + getCurrentPlayer() + '!');
+    gridItems.forEach((element) => {
+      element.classList.add('gameOver');
+    });
+  }
+
   const gameChecker = (marker) => {
 
     //Check Rows
-    if (GameBoard.getBoardArray()[0] == GameBoard.getBoardArray()[1] && GameBoard.getBoardArray()[0] == GameBoard.getBoardArray()[2] && GameBoard.getBoardArray()[0] == marker) {
-      alert('Winner is ' + getCurrentPlayer() + '!')
-    } else if (GameBoard.getBoardArray()[3] == GameBoard.getBoardArray()[4] && GameBoard.getBoardArray()[0] == GameBoard.getBoardArray()[5] && GameBoard.getBoardArray()[3] == marker) {
-      alert('Winner is ' + getCurrentPlayer() + '!')
-    } else if (GameBoard.getBoardArray()[6] == GameBoard.getBoardArray()[7] && GameBoard.getBoardArray()[6] == GameBoard.getBoardArray()[8] && GameBoard.getBoardArray()[6] == marker) {
-      alert('Winner is ' + getCurrentPlayer() + '!')
+    if (GameBoard.boardArray[0] == GameBoard.boardArray[1] && GameBoard.boardArray[0] == GameBoard.boardArray[2] && GameBoard.boardArray[0] == marker) {
+      declareWinner();
+    } else if (GameBoard.boardArray[3] == GameBoard.boardArray[4] && GameBoard.boardArray[3] == GameBoard.boardArray[5] && GameBoard.boardArray[3] == marker) {
+      declareWinner();
+    } else if (GameBoard.boardArray[6] == GameBoard.boardArray[7] && GameBoard.boardArray[6] == GameBoard.boardArray[8] && GameBoard.boardArray[6] == marker) {
+      declareWinner();
     }
     //Check Columns
-
+    else if (GameBoard.boardArray[0] == GameBoard.boardArray[3] && GameBoard.boardArray[0] == GameBoard.boardArray[6] && GameBoard.boardArray[0] == marker) {
+      declareWinner();
+    } else if (GameBoard.boardArray[1] == GameBoard.boardArray[4] && GameBoard.boardArray[1] == GameBoard.boardArray[7] && GameBoard.boardArray[1] == marker) {
+      declareWinner();
+    } else if (GameBoard.boardArray[2] == GameBoard.boardArray[5] && GameBoard.boardArray[2] == GameBoard.boardArray[8] && GameBoard.boardArray[2] == marker) {
+      declareWinner();
+    }
     //Check diagonal
-    
+    else if (GameBoard.boardArray[0] == GameBoard.boardArray[4] && GameBoard.boardArray[0] == GameBoard.boardArray[8] && GameBoard.boardArray[0] == marker) {
+      declareWinner();
+    } else if (GameBoard.boardArray[2] == GameBoard.boardArray[4] && GameBoard.boardArray[2] == GameBoard.boardArray[6] && GameBoard.boardArray[2] == marker) {
+      declareWinner();
+    } else if (!GameBoard.boardArray.includes('')) {
+      alert('Draw!')
+    } else {
+      return;
+    }
   }
 
   //Name Buttons
@@ -91,6 +113,30 @@ const DisplayController = (() => {
     playerT.setName(newName);
   });
 
+  //Restart button functionality
+  restartButton.addEventListener('click', () => {
+    GameBoard.boardArray.length = 0;
+    GameBoard.boardArray.push('', '', '', '', '', '', '', '', '', )
+    playerTurn = true;
+    let playerOneClass = document.querySelectorAll('.playerOneColour');
+    let playerTwoClass = document.querySelectorAll('.playerTwoColour');
+    let gameOverRemover = document.querySelectorAll('.gameOver');
+
+    playerOneClass.forEach((element) => {
+      element.classList.remove('playerOneColour');
+    });
+
+    playerTwoClass.forEach((element) => {
+      element.classList.remove('playerTwoColour');
+    });
+
+    gameOverRemover.forEach((element) => {
+      element.classList.remove('gameOver');
+    });
+
+    draw();
+  });
+
   return {
     draw
   };
@@ -105,7 +151,7 @@ const playerFactory = (name, marker) => {
   const getName = () => {
     return name;
   }
-  const getMarker = () =>{
+  const getMarker = () => {
     return marker;
   }
   return {
